@@ -1,11 +1,24 @@
 {
-  "name": "expense-tracker-backend",
-  "version": "1.0.0",
-  "description": "Backend for an expense tracker app",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "S. M. Sohel Reza",
-  "license": "ISC"
+    "name": "expense-tracker-backend",
+    "version": "1.0.0",
+    "description": "Backend for an expense tracker app",
+    "main": "app.js",
+    "scripts": {
+        "start": "NODE_ENV=development nodemon app.js",
+        "prod": "NODE_ENV=production node app.js"
+    },
+    "author": "S. M. Sohel Reza",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^10.0.0",
+        "express": "^4.18.2",
+        "express-validator": "^6.14.2",
+        "http-errors": "^1.8.1",
+        "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.4",
+        "mongoose": "^5.13.15",
+        "multer": "^1.4.4"
+    }
 }
