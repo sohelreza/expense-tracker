@@ -21,12 +21,21 @@ const doLoginValidationHandler = function (req, res, next) {
   } else {
     console.log("log 4");
 
-    res.render("index", {
-      data: {
-        username: req.body.username,
-      },
+    res.status(400).json({
       errors: mappedErrors,
+      // {
+      //   common: {
+      //     msg: "Authentication failure!",
+      //   },
+      // },
     });
+
+    // res.render("index", {
+    //   data: {
+    //     username: req.body.username,
+    //   },
+    //   errors: mappedErrors,
+    // });
   }
 };
 
