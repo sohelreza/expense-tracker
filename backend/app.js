@@ -11,10 +11,10 @@ const path = require("path");
 const loginRouter = require("./router/loginRouter");
 // const usersRouter = require("./router/usersRouter");
 // const inboxRouter = require("./router/inboxRouter");
-// const {
-//   notFoundHandler,
-//   errorHandler,
-// } = require("./middlewares/common/errorHandler");
+const {
+  notFoundHandler,
+  errorHandler,
+} = require("./middlewares/common/errorHandler");
 
 const app = express();
 const server = http.createServer(app);
@@ -55,10 +55,10 @@ app.use("/", loginRouter);
 // app.use("/inbox", inboxRouter);
 
 // 404 not found handler
-// app.use(notFoundHandler);
+app.use(notFoundHandler);
 
 // common error handler
-// app.use(errorHandler);
+app.use(errorHandler);
 
 server.listen(process.env.PORT, () => {
   console.log(`app listening to port ${process.env.PORT}`);

@@ -14,6 +14,8 @@ function getLogin(req, res, next) {
 // do login
 async function login(req, res, next) {
   try {
+    console.log("log 1");
+
     // find a user who has this email/username
     const user = await User.findOne({
       $or: [{ email: req.body.username }, { mobile: req.body.username }],
@@ -58,6 +60,8 @@ async function login(req, res, next) {
       throw createError("Login failed! Please try again.");
     }
   } catch (err) {
+    console.log("log 2");
+
     res.render("index", {
       data: {
         username: req.body.username,
