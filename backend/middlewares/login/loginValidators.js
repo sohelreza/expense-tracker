@@ -12,15 +12,30 @@ const doLoginValidators = [
 const doLoginValidationHandler = function (req, res, next) {
   const errors = validationResult(req);
   const mappedErrors = errors.mapped();
+  console.log("log 5", mappedErrors);
+
   if (Object.keys(mappedErrors).length === 0) {
+    console.log("log 3");
+
     next();
   } else {
-    res.render("index", {
-      data: {
-        username: req.body.username,
-      },
+    console.log("log 4");
+
+    res.status(400).json({
       errors: mappedErrors,
+      // {
+      //   common: {
+      //     msg: "Authentication failure!",
+      //   },
+      // },
     });
+
+    // res.render("index", {
+    //   data: {
+    //     username: req.body.username,
+    //   },
+    //   errors: mappedErrors,
+    // });
   }
 };
 
