@@ -9,7 +9,7 @@ const path = require("path");
 
 // internal imports
 const loginRouter = require("./router/loginRouter");
-// const usersRouter = require("./router/usersRouter");
+const usersRouter = require("./router/usersRouter");
 // const inboxRouter = require("./router/inboxRouter");
 const {
   notFoundHandler,
@@ -51,7 +51,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // routing setup
 app.use("/", loginRouter);
-// app.use("/users", usersRouter);
+app.use("/users", usersRouter);
 // app.use("/inbox", inboxRouter);
 
 // 404 not found handler
