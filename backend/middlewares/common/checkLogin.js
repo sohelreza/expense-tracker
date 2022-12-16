@@ -12,32 +12,24 @@ const checkLogin = (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decoded;
 
-      // pass user info to response locals
-      if (res.locals.html) {
-        res.locals.loggedInUser = decoded;
-      }
       next();
     } catch (err) {
-      if (res.locals.html) {
-        res.redirect("/");
-      } else {
-        res.status(500).json({
-          errors: {
-            common: {
-              msg: "Authentication failure!",
-            },
+      res.status(500).json({
+        errors: {
+          common: {
+            msg: "Authentication failure!",
           },
-        });
-      }
-    }
-  } else {
-    if (res.locals.html) {
-      res.redirect("/");
-    } else {
-      res.status(401).json({
-        error: "Authentication failure!",
+        },
       });
     }
+  } else {
+    res.status(500).json({
+      errors: {
+        common: {
+          msg: "Authentication failure!",
+        },
+      },
+    });
   }
 };
 
@@ -59,17 +51,13 @@ function requireRole(role) {
     if (req.user.role && role.includes(req.user.role)) {
       next();
     } else {
-      if (res.locals.html) {
-        next(createError(401, "You are not authorized to access this page!"));
-      } else {
-        res.status(401).json({
-          errors: {
-            common: {
-              msg: "You are not authorized!",
-            },
+      res.status(401).json({
+        errors: {
+          common: {
+            msg: "You are not authorized!",
           },
-        });
-      }
+        },
+      });
     }
   };
 }

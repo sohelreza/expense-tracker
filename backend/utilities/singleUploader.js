@@ -42,7 +42,13 @@ function uploader(
       if (allowed_file_types.includes(file.mimetype)) {
         cb(null, true);
       } else {
-        cb(createError(error_msg));
+        res.status(500).json({
+          errors: {
+            avatar: {
+              msg: error_msg,
+            },
+          },
+        });
       }
     },
   });

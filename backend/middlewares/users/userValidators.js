@@ -12,10 +12,12 @@ const addUserValidators = [
   check("name")
     .isLength({ min: 1 })
     .withMessage("Name is required")
-    .isAlpha("en-US", { ignore: " -" })
+    .isAlpha("en-US", { ignore: " -." })
     .withMessage("Name must not contain anything other than alphabet")
     .trim(),
   check("email")
+    .isLength({ min: 1 })
+    .withMessage("Email is required")
     .isEmail()
     .withMessage("Invalid email address")
     .trim()
@@ -30,15 +32,15 @@ const addUserValidators = [
       }
     }),
   check("mobile")
-    .isMobilePhone("bn-BD", {
-      strictMode: true,
-    })
-    .withMessage("Mobile number must be a valid Bangladeshi mobile number")
+    .isLength({ min: 1 })
+    .withMessage("Phone Number is required")
+    .isMobilePhone("bn-BD")
+    .withMessage("Phone number must be a valid Bangladeshi mobile number")
     .custom(async (value) => {
       try {
         const user = await User.findOne({ mobile: value });
         if (user) {
-          throw createError("Mobile already is use!");
+          throw createError("Phone Number is already in use!");
         }
       } catch (err) {
         throw createError(err.message);
@@ -54,12 +56,18 @@ const addUserValidators = [
 const addUserValidationHandler = function (req, res, next) {
   const errors = validationResult(req);
   const mappedErrors = errors.mapped();
+
+  // console.log(mappedErrors);
+
   if (Object.keys(mappedErrors).length === 0) {
+    console.log("log 5");
+
     next();
   } else {
     // remove uploaded files
-    if (req.files.length > 0) {
+    if (req.files && req.files.length > 0) {
       const { filename } = req.files[0];
+
       unlink(
         path.join(__dirname, `/../public/uploads/avatars/${filename}`),
         (err) => {
@@ -68,9 +76,20 @@ const addUserValidationHandler = function (req, res, next) {
       );
     }
 
+    console.log("log 7");
+
     // response the errors
-    res.status(500).json({
+    // res.status(500).json({
+    //   errors: mappedErrors,
+    // });
+
+    res.status(400).json({
       errors: mappedErrors,
+      // {
+      //   common: {
+      //     msg: "Authentication failure!",
+      //   },
+      // },
     });
   }
 };

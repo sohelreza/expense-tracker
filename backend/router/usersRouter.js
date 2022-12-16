@@ -31,8 +31,8 @@ router.get(
 // add user
 router.post(
   "/",
-  checkLogin,
-  requireRole(["admin"]),
+  // checkLogin,
+  // requireRole(["admin"]),
   avatarUpload,
   addUserValidators,
   addUserValidationHandler,
